@@ -162,8 +162,23 @@ footer{padding:32px 0 48px;color:var(--faint);font-size:13px;text-align:center}
 .adgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:14px}
 .ad{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ad img,.ad video{display:block;width:100%;height:auto;background:var(--line-soft)}
-.ad div{padding:12px 14px;display:flex;justify-content:space-between;gap:8px;align-items:center}
-.ad div b{font-size:14px}
+.ad .ad-meta{padding:12px 14px 4px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ad .ad-meta b{font-size:14px}
+.ad-act{display:flex;gap:8px;padding:8px 14px 14px}
+.ad-act button,.ad-endre button{font:600 13px Geist,sans-serif;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.ad-act button.ok{background:var(--deep);border-color:var(--deep);color:#fff}
+.ad-act button:hover{border-color:var(--ink)}
+.ad-endre{display:grid;gap:8px;padding:0 14px 14px}
+.ad-endre textarea{min-height:70px;font-size:14px}
+.ad-endre button{justify-self:start;background:var(--deep);border-color:var(--deep);color:#fff}
+.chip.ok{background:var(--tint);color:var(--green-text)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.kpi small{display:block;color:var(--muted);font-size:13px;font-weight:600}
+.kpi b{display:block;font-size:30px;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+.tall-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:34px}
+.tall-h h2{margin:0;font-size:20px}
+.tall-h span{color:var(--faint);font-size:13px}
 .vidrow{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:22px;align-items:start;margin-top:14px}
 .vidrow video{width:100%;border-radius:var(--r);border:1px solid var(--line);background:#000}
 @media (max-width:640px){.vidrow{grid-template-columns:1fr}}

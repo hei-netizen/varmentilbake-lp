@@ -162,8 +162,23 @@ footer{padding:32px 0 48px;color:var(--faint);font-size:13px;text-align:center}
 .adgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:14px}
 .ad{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ad img,.ad video{display:block;width:100%;height:auto;background:var(--line-soft)}
-.ad div{padding:12px 14px;display:flex;justify-content:space-between;gap:8px;align-items:center}
-.ad div b{font-size:14px}
+.ad .ad-meta{padding:12px 14px 4px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ad .ad-meta b{font-size:14px}
+.ad-act{display:flex;gap:8px;padding:8px 14px 14px}
+.ad-act button,.ad-endre button{font:600 13px Geist,sans-serif;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.ad-act button.ok{background:var(--deep);border-color:var(--deep);color:#fff}
+.ad-act button:hover{border-color:var(--ink)}
+.ad-endre{display:grid;gap:8px;padding:0 14px 14px}
+.ad-endre textarea{min-height:70px;font-size:14px}
+.ad-endre button{justify-self:start;background:var(--deep);border-color:var(--deep);color:#fff}
+.chip.ok{background:var(--tint);color:var(--green-text)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.kpi small{display:block;color:var(--muted);font-size:13px;font-weight:600}
+.kpi b{display:block;font-size:30px;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+.tall-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:34px}
+.tall-h h2{margin:0;font-size:20px}
+.tall-h span{color:var(--faint);font-size:13px}
 .vidrow{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:22px;align-items:start;margin-top:14px}
 .vidrow video{width:100%;border-radius:var(--r);border:1px solid var(--line);background:#000}
 @media (max-width:640px){.vidrow{grid-template-columns:1fr}}
@@ -188,9 +203,24 @@ footer{padding:32px 0 48px;color:var(--faint);font-size:13px;text-align:center}
 <main class="wrap">
 <div class="page-h"><span class="eyebrow">Annonser</span><h1>Annonsene deres</h1>
 <p class="lead">Video og bildeannonser vi har laget til dere.</p></div>
-<section style="padding-top:20px"><h2>Video</h2><div class="vidrow"><video controls playsinline preload="none" poster="img/2026-09-29_varmentilbake_kaldt-gulv-figurer_9x16_v4-erik.jpg" src="img/2026-09-29_varmentilbake_kaldt-gulv-figurer_9x16_v4-erik.mp4"></video>
-<div><h3 style="margin:0 0 6px">Kaldt gulv</h3><span class="chip">Forslag</span></div></div></section>
-<section style="padding-top:20px"><h2>Bildeannonser</h2><div class="adgrid"><figure class="ad" style="margin:0"><img src="img/A-sms_1x1.webp" alt="SMS" loading="lazy"><div><b>SMS</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/B-vidar_1x1.webp" alt="Vidar" loading="lazy"><div><b>Vidar</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/C-for-etter_1x1.webp" alt="Før og etter" loading="lazy"><div><b>Før og etter</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/D-prisgaranti_1x1.webp" alt="Prisgaranti" loading="lazy"><div><b>Prisgaranti</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/E-kaldt-bad_1x1.webp" alt="Kaldt bad" loading="lazy"><div><b>Kaldt bad</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/F-skanner_1x1.webp" alt="Skanner" loading="lazy"><div><b>Skanner</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/G-postit_1x1.webp" alt="Post-it" loading="lazy"><div><b>Post-it</b><span class="chip">Forslag</span></div></figure><figure class="ad" style="margin:0"><img src="img/H-notat_1x1.webp" alt="Notat" loading="lazy"><div><b>Notat</b><span class="chip">Forslag</span></div></figure></div></section>
+<section style="padding-top:20px"><h2>Video</h2><div class="vidrow ad" style="border:0;background:none" data-id="2026-09-29_varmentilbake_kaldt-gulv-figurer_9x16_v4-erik" data-navn="Kaldt gulv"><video controls playsinline preload="none" poster="img/2026-09-29_varmentilbake_kaldt-gulv-figurer_9x16_v4-erik.jpg" src="img/2026-09-29_varmentilbake_kaldt-gulv-figurer_9x16_v4-erik.mp4"></video>
+<div><div class="ad-meta" style="padding:0 0 4px"><h3 style="margin:0">Kaldt gulv</h3><span class="chip">Forslag</span></div><div class="ad-act" style="padding:8px 0 0"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" style="padding:8px 0 0" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></div></div></section>
+<section style="padding-top:20px"><h2>Bildeannonser</h2><div class="adgrid"><figure class="ad" style="margin:0" data-id="A-sms_1x1" data-navn="SMS"><img src="img/A-sms_1x1.webp" alt="SMS" loading="lazy"><div class="ad-meta"><b>SMS</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="B-vidar_1x1" data-navn="Vidar"><img src="img/B-vidar_1x1.webp" alt="Vidar" loading="lazy"><div class="ad-meta"><b>Vidar</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="C-for-etter_1x1" data-navn="Før og etter"><img src="img/C-for-etter_1x1.webp" alt="Før og etter" loading="lazy"><div class="ad-meta"><b>Før og etter</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="D-prisgaranti_1x1" data-navn="Prisgaranti"><img src="img/D-prisgaranti_1x1.webp" alt="Prisgaranti" loading="lazy"><div class="ad-meta"><b>Prisgaranti</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="E-kaldt-bad_1x1" data-navn="Kaldt bad"><img src="img/E-kaldt-bad_1x1.webp" alt="Kaldt bad" loading="lazy"><div class="ad-meta"><b>Kaldt bad</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="F-skanner_1x1" data-navn="Skanner"><img src="img/F-skanner_1x1.webp" alt="Skanner" loading="lazy"><div class="ad-meta"><b>Skanner</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="G-postit_1x1" data-navn="Post-it"><img src="img/G-postit_1x1.webp" alt="Post-it" loading="lazy"><div class="ad-meta"><b>Post-it</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure><figure class="ad" style="margin:0" data-id="H-notat_1x1" data-navn="Notat"><img src="img/H-notat_1x1.webp" alt="Notat" loading="lazy"><div class="ad-meta"><b>Notat</b><span class="chip">Forslag</span></div><div class="ad-act"><button type="button" class="ok">Godkjenn</button><button type="button" class="endre">Endre</button></div><form class="ad-endre" hidden><textarea placeholder="Hva vil dere endre?" aria-label="Hva vil dere endre?"></textarea><button type="submit">Send</button></form></figure></div></section>
+<script>
+(()=>{const HOOK='https://hook.eu1.make.com/1arekwfeky6chrxvuop8iiuwwf0gi5bg',SLUG='varmentilbake',BEDRIFT='Varmekabelreperatøren AS';
+let st={};
+function vis(){document.querySelectorAll('.ad[data-id]').forEach(a=>{const v=st[a.dataset.id],c=a.querySelector('.chip');if(!v)return;
+ if(v.status==='godkjent'){c.textContent='Godkjent';c.className='chip ok';a.querySelector('.ad-act').hidden=true}
+ else{c.textContent='Endring sendt';c.className='chip'}})}
+function lagre(a,status,kommentar){st[a.dataset.id]={status,kommentar,tid:new Date().toISOString()};vis();
+ fetch(HOOK,{method:'POST',mode:'no-cors',body:new URLSearchParams({handling:'lagre',kunde:SLUG,bedrift:BEDRIFT,annonse:a.dataset.navn,status,kommentar,statuser:JSON.stringify(st)})}).catch(()=>{})}
+fetch(HOOK+'?handling=hent&kunde='+SLUG).then(r=>r.json()).then(d=>{st=d||{};vis()}).catch(()=>{});
+document.querySelectorAll('.ad[data-id]').forEach(a=>{const f=a.querySelector('.ad-endre');
+ a.querySelector('.ok').onclick=()=>{f.hidden=true;lagre(a,'godkjent','')};
+ a.querySelector('.endre').onclick=()=>{f.hidden=!f.hidden;if(!f.hidden)f.querySelector('textarea').focus()};
+ f.onsubmit=e=>{e.preventDefault();const t=f.querySelector('textarea').value.trim();if(!t)return;f.hidden=true;lagre(a,'endre',t);f.querySelector('textarea').value=''};
+});})();
+</script>
 <section id="kontakt">
     <div class="card person">
       <div class="avatar">V</div>
