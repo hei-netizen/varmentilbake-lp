@@ -373,6 +373,10 @@ fbq('track','PageView');
               </div>
             </div>
             <div class="field">
+              <label for="a-adr">Adresse <span class="req">*</span></label>
+              <div class="inp"><input type="text" id="a-adr" name="adresse" placeholder="Gate og husnummer" autocomplete="street-address" maxlength="160" required></div>
+            </div>
+            <div class="field">
               <label for="a-epost">E-post <span class="req">*</span></label>
               <div class="inp"><input type="email" id="a-epost" name="email" placeholder="navn@epost.no" autocomplete="email" required></div>
             </div>
@@ -628,11 +632,11 @@ function vtNormTlf(p){var d=(p||'').replace(/[^0-9+]/g,'');
 document.getElementById('leadForm').addEventListener('submit',function(e){
   e.preventDefault(); var f=e.target;
   if(!f.rom.value){document.getElementById('qRom').classList.add('err');document.getElementById('qRom').scrollIntoView({block:'center',behavior:'smooth'});return;}
-  if(!f.full_name.value.trim()||!f.phone.value.trim()||!f.email.value.trim()||!f.email.checkValidity()||!/^[0-9]{4}$/.test(f.postnr.value.trim())){f.reportValidity();if(!/^[0-9]{4}$/.test(f.postnr.value.trim()))f.postnr.focus();return;}
+  if(!f.full_name.value.trim()||!f.phone.value.trim()||!f.adresse.value.trim()||!f.email.value.trim()||!f.email.checkValidity()||!/^[0-9]{4}$/.test(f.postnr.value.trim())){f.reportValidity();if(!/^[0-9]{4}$/.test(f.postnr.value.trim()))f.postnr.focus();return;}
   var btn=document.getElementById('leadBtn'); btn.disabled=true; btn.style.opacity='.7';
   var params=new URLSearchParams(window.location.search);
   var data={rom:f.rom.value,full_name:f.full_name.value.trim(),phone:vtNormTlf(f.phone.value),
-    postnr:f.postnr.value.trim(),email:f.email.value.trim(),melding:f.melding.value.trim(),
+    postnr:f.postnr.value.trim(),adresse:f.adresse.value.trim(),email:f.email.value.trim(),melding:f.melding.value.trim(),
     tjeneste:'Feilsøking/reparasjon varmekabel',kilde:'varmentilbake-lp',
     side_url:window.location.href,gclid:params.get('gclid')||'',fbclid:params.get('fbclid')||''};
   var ferdig=function(){
