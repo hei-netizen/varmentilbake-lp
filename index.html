@@ -616,7 +616,8 @@ if(overlay){
 
 /* ===== LEAD-SKJEMA =====
    LEAD_WEBHOOK_URL koblet 29.09.2026 til Make-scenario 7676673
-   (sheet + varsel til Vidar + autosvar til leadet). Bilder krever et eget opplastings-endepunkt ved lansering. */
+   (sheet + varsel til Vidar + autosvar til leadet). Bilder (02.10.2026): krympes i nettleseren til maks 1600 px JPEG
+   og sendes som JSON-feltet bilder:[{navn,data(base64)}] — Make legger dem ved e-posten til Vidar. */
 var LEAD_WEBHOOK_URL='https://hook.eu1.make.com/7hpnbamnjpjvvug3suqrhi8uin996oop'; // Make-scenario (29.09.2026): sheet + varsel til kunden + autosvar til leadet
 var TAKK_URL='takk.html';
 
@@ -634,6 +635,43 @@ document.getElementById('leadForm').addEventListener('submit',function(e){
     postnr:f.postnr.value.trim(),email:f.email.value.trim(),melding:f.melding.value.trim(),
     tjeneste:'Feilsøking/reparasjon varmekabel',kilde:'varmentilbake-lp',
     side_url:window.location.href,gclid:params.get('gclid')||'',fbclid:params.get('fbclid')||''};
+  var ferdig=function(){
+    try{sessionStorage.setItem('vt_lead_done','1');}catch(err){}
+    var msg=document.getElementById('formMsg'); if(msg)msg.style.display='block';
+    setTimeout(function(){window.location.href=TAKK_URL;},500);
+  };
+  var filer=[].slice.call((f.querySelector('#a-bilde')||{}).files||[]).slice(0,MAKS_BILDER);
+  if(LEAD_WEBHOOK_URL&&filer.length&&window.fetch){
+    var txt=document.querySelector('#leadBtn .t'); if(txt)txt.firstChild.textContent='Sender bilder … ';
+    Promise.all(filer.map(vtKrympBilde)).then(function(b){
+      data.bilder=b.filter(Boolean);
+      // Henger opplastingen i over 30 s (svakt nett), sendes leadet uten bilder så det aldri går tapt.
+      var tidsavbrudd=new Promise(function(r,feil){setTimeout(function(){feil('tidsavbrudd');},30000);});
+      return Promise.race([fetch(LEAD_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}),tidsavbrudd]);
+    }).then(ferdig,function(){delete data.bilder;vtSendUtenBilder(data);ferdig();});
+    return;
+  }
+  vtSendUtenBilder(data); ferdig();
+});
+
+/* Krymper ett bilde til maks 1600 px JPEG (base64 uten prefiks). Bilder nettleseren ikke kan lese (f.eks. HEIC i Chrome) hoppes over. */
+var MAKS_BILDER=5;
+function vtKrympBilde(fil,i){
+  return new Promise(function(ok){
+    if(!fil||!/^image\//.test(fil.type||'image/')){ok(null);return;}
+    var url=URL.createObjectURL(fil), img=new Image();
+    img.onload=function(){
+      try{var m=1600,s=Math.min(1,m/Math.max(img.naturalWidth,img.naturalHeight)),c=document.createElement('canvas');
+        c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        ok({navn:'gulv-'+(i+1)+'.jpg',data:c.toDataURL('image/jpeg',0.8).split(',')[1]});
+      }catch(e){ok(null);} URL.revokeObjectURL(url);};
+    img.onerror=function(){URL.revokeObjectURL(url);ok(null);};
+    img.src=url;
+  });
+}
+
+function vtSendUtenBilder(data){
   if(LEAD_WEBHOOK_URL){
     var body=new URLSearchParams();
     for(var k in data){if(data.hasOwnProperty(k))body.append(k,data[k]==null?'':data[k]);}
@@ -641,10 +679,7 @@ document.getElementById('leadForm').addEventListener('submit',function(e){
       fetch(LEAD_WEBHOOK_URL,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString()});
     }catch(err){}
   }
-  try{sessionStorage.setItem('vt_lead_done','1');}catch(err){}
-  var msg=document.getElementById('formMsg'); if(msg)msg.style.display='block';
-  setTimeout(function(){window.location.href=TAKK_URL;},500);
-});
+}
 </script>
 <!-- ===== SKJEMA-MINNE + POPUP-SPERRE =====
      1) Alt brukeren fyller inn (felter + pills) lagres i sessionStorage og fylles inn igjen ved reload.
