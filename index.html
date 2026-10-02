@@ -84,7 +84,11 @@ h1,h2,h3,h4{font-weight:700;line-height:1.1;letter-spacing:-0.015em;overflow-wra
 .cta.lg .t{font-size:1.12rem}
 
 /* ---- top bar ---- */
-.topbar{background:var(--white);border-bottom:1px solid var(--line);padding:12px 0}
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--line);padding:12px 0}
+.topbar .hcta{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:0.95rem;color:#fff;background:var(--acc);border-radius:var(--pill);padding:10px 20px;white-space:nowrap;text-decoration:none;transition:.2s;box-shadow:0 10px 20px -14px rgba(185,28,28,.75)}
+.topbar .hcta:hover{background:var(--acc-deep)}
+.topbar .hcta svg{width:14px;height:14px;stroke:#fff}
+@media(max-width:520px){.topbar .hcta{padding:9px 14px;font-size:0.85rem}}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .topbar .logo{height:30px;width:auto}
 .topbar .tel{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:0.95rem;color:var(--clay-deep);border:1.5px solid var(--line);border-radius:var(--pill);padding:8px 16px;white-space:nowrap}
@@ -286,6 +290,7 @@ h1,h2,h3,h4{font-weight:700;line-height:1.1;letter-spacing:-0.015em;overflow-wra
 <header class="topbar">
   <div class="wrap">
     <img class="logo" src="img/logo.png" alt="Varmekabelreparatøren">
+    <a href="#top" class="hcta jump">Få pris<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   </div>
 </header>
 
