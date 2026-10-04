@@ -207,15 +207,15 @@ footer{padding:32px 0 48px;color:var(--faint);font-size:13px;text-align:center}
 <div class="page-h"><span class="eyebrow">Kundeportal</span><h1>Hei, Vidar.</h1>
 <p class="lead">Alt om samarbeidet vårt samlet på ett sted: oppstart, rapporter, annonser og avtalen.</p></div>
 <div class="statusline"><span class="pulse"></span><div><b>Nå: Oppstart – avtalen venter på signatur</b><br><span style="color:var(--muted)">Signer avtalen i e-posten fra Google, og gi oss tilgang. Annonsene er live 1–2 dager etter at tilgangene er på plass.</span></div></div>
-<div class="tall-h"><h2>Denne uka</h2><span id="tallPeriode">Fra lansering</span></div>
-<div class="kpis"><div class="kpi"><small>Henvendelser</small><b id="kHenv">–</b></div><div class="kpi"><small>Annonsekostnad</small><b id="kKost">–</b></div><div class="kpi"><small>Per henvendelse</small><b id="kPer">–</b></div></div>
-<div class="tiles" style="margin-top:22px"><a class="tile" href="/oppstart/"><b>Oppstart</b><span>Signatur, tilganger og info om bedriften.</span><em class="wait">Pågår</em></a><a class="tile" href="/portal/rapporter/"><b>Rapporter</b><span>Ukesrapport hver mandag etter lansering.</span><em class="wait">Kommer etter lansering</em></a><a class="tile" href="/portal/annonser/"><b>Annonser</b><span>Video og bildeannonser vi har laget.</span><em>27 forslag</em></a><a class="tile" href="/portal/avtale/"><b>Avtale</b><span>De viktigste punktene i avtalen.</span><em class="wait">Venter på signatur</em></a></div>
+<div id="tall" hidden><div class="tall-h"><h2>Denne uka</h2><span id="tallPeriode">Fra lansering</span></div>
+<div class="kpis"><div class="kpi"><small>Henvendelser</small><b id="kHenv">–</b></div><div class="kpi"><small>Annonsekostnad</small><b id="kKost">–</b></div><div class="kpi"><small>Per henvendelse</small><b id="kPer">–</b></div></div></div>
+<div class="tiles" style="margin-top:22px"><a class="tile" href="/oppstart/"><b>Oppstart</b><span>Signatur, tilganger og info om bedriften.</span><em class="wait">Pågår</em></a><a class="tile" href="/portal/rapporter/"><b>Rapporter</b><span>Ukesrapport hver mandag etter lansering.</span><em class="wait">Kommer etter lansering</em></a><a class="tile" href="/portal/annonser/"><b>Annonser</b><span>Video og bildeannonser vi har laget.</span><em>9 forslag</em></a><a class="tile" href="/portal/avtale/"><b>Avtale</b><span>De viktigste punktene i avtalen.</span><em class="wait">Venter på signatur</em></a></div>
 <script>
 fetch('/portal/tall.json?'+Date.now()).then(r=>r.json()).then(d=>{if(!d.live)return;
 const kr=v=>v==null?'–':v.toLocaleString('nb-NO')+' kr';
 document.getElementById('kHenv').textContent=d.henvendelser.toLocaleString('nb-NO');
 document.getElementById('kKost').textContent=kr(d.kostnad);document.getElementById('kPer').textContent=kr(d.per_henvendelse);
-document.getElementById('tallPeriode').textContent=d.fra+'–'+d.til;}).catch(()=>{});
+document.getElementById('tallPeriode').textContent=d.fra+'–'+d.til;document.getElementById('tall').hidden=false;}).catch(()=>{});
 </script>
 <section id="kontakt">
     <div class="card person">
