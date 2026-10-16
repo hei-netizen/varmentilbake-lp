@@ -625,6 +625,21 @@ if(overlay){
 var LEAD_WEBHOOK_URL='https://hook.eu1.make.com/7hpnbamnjpjvvug3suqrhi8uin996oop'; // Make-scenario (29.09.2026): sheet + varsel til kunden + autosvar til leadet
 var TAKK_URL='takk.html';
 
+/* ===== Meta CAPI (16.10.2026) — samme Lead server-side via Supabase-funksjonen meta-capi.
+   event_id deles med takk.html (fbq eventID) → Meta dedupliserer browser + server. */
+var CAPI_URL='https://wzgjpwzyazmchipikotp.supabase.co/functions/v1/meta-capi';
+function arcadsCookie(n){var m=document.cookie.match('(?:^|; )'+n+'=([^;]*)');return m?decodeURIComponent(m[1]):'';}
+function arcadsSendCAPI(pixel,data){
+  var eid='lead-'+Date.now()+'-'+Math.random().toString(36).slice(2,10);
+  try{sessionStorage.setItem('arcads_lead_eid',eid);}catch(err){}
+  var fbc=arcadsCookie('_fbc')||(data.fbclid?'fb.1.'+Date.now()+'.'+data.fbclid:'');
+  var p=JSON.stringify({pixel:pixel,event_name:'Lead',event_id:eid,event_source_url:data.side_url,
+    email:data.email,phone:data.phone,full_name:data.full_name,zip:data.postnr||'',content_name:data.tjeneste,fbp:arcadsCookie('_fbp'),fbc:fbc});
+  try{ if(!(navigator.sendBeacon && navigator.sendBeacon(CAPI_URL,new Blob([p],{type:'text/plain'}))))
+    fetch(CAPI_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'text/plain'},body:p}).catch(function(){});
+  }catch(err){}
+}
+
 function vtNormTlf(p){var d=(p||'').replace(/[^0-9+]/g,'');
   if(/^[49][0-9]{7}$/.test(d))return '+47'+d;
   if(/^0047/.test(d))return '+47'+d.slice(4); return d;}
@@ -639,6 +654,7 @@ document.getElementById('leadForm').addEventListener('submit',function(e){
     postnr:f.postnr.value.trim(),adresse:f.adresse.value.trim(),email:f.email.value.trim(),melding:f.melding.value.trim(),
     tjeneste:'Feilsøking/reparasjon varmekabel',kilde:'varmentilbake-lp',
     side_url:window.location.href,gclid:params.get('gclid')||'',fbclid:params.get('fbclid')||''};
+  arcadsSendCAPI('177035740284836',data);
   var ferdig=function(){
     try{sessionStorage.setItem('vt_lead_done','1');}catch(err){}
     var msg=document.getElementById('formMsg'); if(msg)msg.style.display='block';
