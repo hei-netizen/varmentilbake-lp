@@ -282,7 +282,7 @@ button:active,.copy:active,.btn:active,.tile:active{transform:scale(.97)}
 .adminlinje{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--tint);border-radius:var(--r,14px);padding:12px 16px;margin:18px 0 0;font-size:14px}
 .adminlinje a{margin-left:auto}.skjult-chip{background:#fde8e4;color:#8c2f1f}
 </style>
-<style id="fmt-toggle">.fmt{display:flex;gap:6px;padding:10px 12px 0}.fmt button{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--line,#DDE3EA);background:#fff;color:inherit;border-radius:999px;padding:5px 11px;cursor:pointer}.fmt button.on{background:#0E1C2E;color:#fff;border-color:#0E1C2E}</style></head><body>
+<style id="fmt-toggle">.fmt{display:flex;gap:6px;padding:10px 12px 0}.fmt button{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--line,#DDE3EA);background:#fff;color:inherit;border-radius:999px;padding:5px 11px;cursor:pointer}.fmt button.on{background:#0E1C2E;color:#fff;border-color:#0E1C2E}</style><style id="zoom">.ad img{cursor:zoom-in}.zoom{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:16px}.zoom img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}.zoom button{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:20px;cursor:pointer}</style></head><body>
 <header>
   <div class="wrap">
     <div class="logos">
@@ -375,6 +375,11 @@ async function last(session){$('logginn').hidden=true;
  Object.entries(sek).forEach(([n,x])=>x.querySelectorAll('[data-del]').forEach(d=>{if(d.textContent.trim()===n.trim())d.dataset.dobbel='1'}));
  $('tomt').hidden=ads.some(a=>a.synlig);$('adminlinje').hidden=!admin;$('laster').hidden=true;$('innhold').hidden=false;tell()}
 $('loggut').onclick=async e=>{e.preventDefault();await SB.auth.signOut();try{localStorage.removeItem(NOKKEL)}catch(x){}location.reload()};
+document.addEventListener('click',e=>{const i=e.target.closest('.ad img');if(!i)return;
+ const z=document.createElement('div');z.className='zoom';z.setAttribute('role','dialog');z.setAttribute('aria-modal','true');
+ z.innerHTML='<img><button type="button" aria-label="Lukk">✕</button>';const b=z.querySelector('img');b.src=i.src;b.alt=i.alt;
+ const tast=k=>{if(k.key==='Escape')lukk()},lukk=()=>{z.remove();document.removeEventListener('keydown',tast);document.body.style.overflow=''};
+ z.onclick=lukk;document.addEventListener('keydown',tast);document.body.style.overflow='hidden';document.body.appendChild(z)});
 /* Passord-bro: samme nøkkel som den gamle portalen (StatiCrypt) lagrer i nettleseren */
 const NOKKEL='staticrypt_passphrase';
 /* Delelenker fra den gamle portalen (#staticrypt_pwd=<hash>&remember_me) virker også her */
